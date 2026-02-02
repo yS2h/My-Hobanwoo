@@ -3,10 +3,12 @@ import MainPage from './pages/MainPage';
 import SurveyPage from './pages/SurveyPage';
 import LoadingPage from './pages/LoadingPage';
 import ResultPage from './pages/ResultPage';
+import MobileWarning from './components/MobileWarning';
 
 function App() {
   return (
     <BrowserRouter>
+      <MobileWarning />
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/survey" element={<SurveyPage />} />

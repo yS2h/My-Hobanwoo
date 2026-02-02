@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { shareNative, copyToClipboard, saveAsImage } from '../utils/share';
 
 function ResultPage() {
   const location = useLocation();
@@ -16,14 +17,40 @@ function ResultPage() {
     navigate('/');
   };
 
-  const handleShare = () => {
-    // 공유 기능 (나중에 구현)
-    alert('공유 기능은 준비 중입니다!');
+  const handleShare = async () => {
+    const shareUrl = window.location.origin; // 배포 후에는 실제 URL
+    const shareTitle = '호반우 테스트';
+    const shareText = `나는 ${resultData.type}! 너는 어떤 호반우?`;
+
+    const success = await shareNative(shareTitle, shareText, shareUrl);
+    
+    if (success) {
+      alert('공유 완료!');
+    } else {
+      // 공유 실패 시 URL 복사
+      const copied = await copyToClipboard(shareUrl);
+      if (copied) {
+        alert('링크가 복사되었습니다!');
+      } else {
+        alert('공유에 실패했습니다.');
+      }
+    }
+  };
+
+  const handleSaveImage = async () => {
+    const success = await saveAsImage('result-card', `${resultData.type}.png`);
+    
+    if (success) {
+      alert('이미지가 저장되었습니다!');
+    } else {
+      alert('이미지 저장에 실패했습니다.');
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-100 to-purple-100 p-4">
-      <div className="bg-white rounded-3xl shadow-xl p-8 max-w-2xl w-full text-center">
+      {/* 이미지 저장용 ID 추가 */}
+      <div id="result-card" className="bg-white rounded-3xl shadow-xl p-8 max-w-2xl w-full text-center">
         <div className="text-8xl mb-6">
           {resultData.image}
         </div>
@@ -40,18 +67,27 @@ function ResultPage() {
           {resultData.description}
         </p>
 
-        <div className="flex gap-4 justify-center">
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={handleRestart}
+              className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-full transition-all transform hover:scale-105"
+            >
+              다시 하기
+            </button>
+            <button
+              onClick={handleShare}
+              className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-full transition-all transform hover:scale-105"
+            >
+              결과 공유하기
+            </button>
+          </div>
+          
           <button
-            onClick={handleRestart}
-            className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105"
+            onClick={handleSaveImage}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full transition-all transform hover:scale-105 mx-auto"
           >
-            다시 하기
-          </button>
-          <button
-            onClick={handleShare}
-            className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105"
-          >
-            결과 공유하기
+            이미지로 저장
           </button>
         </div>
       </div>
