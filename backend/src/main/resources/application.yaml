@@ -1,3 +1,16 @@
 spring:
   application:
     name: MyHoobanWoo
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/mbti_db
+    username: root
+    password: 1234
+    jpa:
+    hibernate:
+      ddl-auto: validate # 우리가 이미 DB에 테이블을 직접 만들었으니 검사만 하라고 지시합니다.
+    show-sql: true # 스프링이 날리는 DB 쿼리문을 로그로 예쁘게 보여줍니다.
+    properties:
+      hibernate:
+        format_sql: true
