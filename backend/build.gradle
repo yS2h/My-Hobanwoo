@@ -27,12 +27,21 @@ dependencies {
     // 웹 개발 필수
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
     // 롬복 (Lombok)
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // MariaDB 드라이버 (이걸 넣어야 합니다!)
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
     // 테스트
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
 }
 
 tasks.named('test') {
