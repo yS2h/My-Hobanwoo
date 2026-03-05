@@ -1,31 +1,33 @@
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 function MainPage() {
   const navigate = useNavigate();
 
   const handleStart = () => {
-    navigate('/survey');
+    navigate("/survey");
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-100 to-purple-100">
-      <div className="text-center">
-        <h1 className="text-5xl font-bold text-gray-800 mb-4">
-          🐮 호반우 테스트 🐮
-        </h1>
-        <p className="text-xl text-gray-600 mb-8">
-          나는 어떤 호반우일까?
-        </p>
-        <p className="text-gray-500 mb-12">
-          10개의 질문으로 알아보는 나의 대학생활 유형
-        </p>
-        
-        <button
-          onClick={handleStart}
-          className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 px-8 rounded-full text-xl transition-all transform hover:scale-105"
-        >
-          테스트 시작하기
-        </button>
+    <div className="mobile-container">
+      <div className="main-page">
+        <img
+          src="/images/title.png"
+          alt="나만의 호반우"
+          className="title-img"
+        />
+
+        <div className="button-section">
+          <img
+            src="/images/hobanwoo.png"
+            alt="호반우 캐릭터"
+            className="character-img"
+          />
+
+          <button className="start-button" onClick={handleStart}>
+            <span className="button-text-main">시작하기</span>
+            <span className="button-text-sub">지금까지 ~학우가 확인했어요</span>
+            {/* 여기 ~ 숫자 나중에 db에서 받아오깅 */}
+          </button>
+        </div>
       </div>
     </div>
   );
