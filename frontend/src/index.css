@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  font-family: "Pretendard";
+}
+
+.mobile-container {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.button-section {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.title-img {
+  width: 115%;
+}
+
+.character-img {
+  width: 350px;
+  z-index: 2;
+  margin-bottom: -12px;
+}
+
+.start-button {
+  width: 100%;
+  max-width: 357px;
+  height: 65px;
+  background-color: #d7557e;
+  border-radius: 64px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.start-button:active {
+  transform: scale(0.98);
+}
+
+.button-text-main {
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: bold;
+}
+
+.button-text-sub {
+  font-size: 16px;
+  margin-top: 0px;
+  margin-bottom: 1px;
+  opacity: 0.9;
+  line-height: 1.2;
+}
