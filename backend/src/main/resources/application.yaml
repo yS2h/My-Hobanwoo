@@ -11,7 +11,7 @@ spring:
   jpa:
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: create # Render의 새 DB는 텅 비어있으므로 테이블을 자동 생성하도록 변경합니다.
+      ddl-auto: none # Render의 새 DB는 텅 비어있으므로 테이블을 자동 생성하도록 변경합니다.
     show-sql: true # 스프링이 날리는 DB 쿼리문을 로그로 예쁘게 보여줍니다.
     properties:
       hibernate:
