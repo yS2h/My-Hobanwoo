@@ -17,6 +17,7 @@ body {
   overflow: hidden;
 }
 
+/* 메인페이지 */
 .main-page {
   display: flex;
   flex-direction: column;
@@ -78,4 +79,90 @@ body {
   margin-bottom: 1px;
   opacity: 0.9;
   line-height: 1.2;
+}
+
+/* 진행 페이지 */
+.survey-page {
+  width: 100%;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.progress-container {
+  width: 100%;
+  height: 12px;
+  background-color: #fce4ec;
+  border-radius: 10px;
+  margin-bottom: px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #d7557e;
+  transition: width 0.3s ease-in-out;
+}
+
+.question-count {
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #1d1d1d;
+}
+
+.question-card {
+  position: relative;
+  width: 90%;
+  max-width: 337px;
+  aspect-ratio: 1 / 1;
+  background-image: url("/images/frame.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 45px;
+}
+
+.question-text {
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  word-break: keep-all;
+  line-height: 1.4;
+  color: #575757;
+  white-space: pre-line;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.answer-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.answer-button {
+  width: 100%;
+  min-height: 70px;
+  background-color: white;
+  border: 2px solid #d7557e;
+  border-radius: 64px;
+  padding: 5px 25px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #d7557e;
+  white-space: pre-line;
+  cursor: pointer;
+}
+
+.answer-button:active {
+  background-color: #fff0f5;
+  transform: scale(0.97);
 }
