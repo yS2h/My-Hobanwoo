@@ -35,7 +35,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     // MariaDB 드라이버 (이걸 넣어야 합니다!)
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+//    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    runtimeOnly 'org.postgresql:postgresql'
 
     // 테스트
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -3,14 +3,20 @@ spring:
     name: MyHoobanWoo
 
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/mbti_db
-    username: root
-    password: 1234
-    jpa:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
     hibernate:
-      ddl-auto: validate # 우리가 이미 DB에 테이블을 직접 만들었으니 검사만 하라고 지시합니다.
+      ddl-auto: update # Render의 새 DB는 텅 비어있으므로 테이블을 자동 생성하도록 변경합니다.
     show-sql: true # 스프링이 날리는 DB 쿼리문을 로그로 예쁘게 보여줍니다.
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  sql:
+    init:
+      mode: always # 서버가 켜질 때 data.sql 파일을 읽어서 초기 데이터를 넣기 위한 설정입니다.
