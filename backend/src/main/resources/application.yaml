@@ -20,4 +20,4 @@ spring:
 
   sql:
     init:
-      mode: always # 서버가 켜질 때 data.sql 파일을 읽어서 초기 데이터를 넣기 위한 설정입니다.
+      mode: never # 서버가 켜질 때 data.sql 파일을 읽어서 초기 데이터를 넣기 위한 설정입니다.
