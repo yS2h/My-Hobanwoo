@@ -1,4 +1,4 @@
-package entity;
+package com.hobanwoo.entity;
 
 
 public enum QuestionType {

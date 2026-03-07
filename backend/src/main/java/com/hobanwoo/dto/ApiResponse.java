@@ -1,4 +1,4 @@
-package dto;
+package com.hobanwoo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

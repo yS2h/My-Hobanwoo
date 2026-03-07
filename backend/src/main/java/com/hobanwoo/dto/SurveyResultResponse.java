@@ -1,4 +1,4 @@
-package dto;
+package com.hobanwoo.dto;
 
 import java.util.List;
 import lombok.Builder;

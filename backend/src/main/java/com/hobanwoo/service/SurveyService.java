@@ -1,14 +1,14 @@
-package service;
+package com.hobanwoo.service;
 
-import dto.ResponseQuestion;
-import entity.Question;
+import com.hobanwoo.dto.ResponseQuestion;
+import com.hobanwoo.entity.Question;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import repository.QuestionRepository;
+import com.hobanwoo.repository.QuestionRepository;
 
 @Service
 @RequiredArgsConstructor

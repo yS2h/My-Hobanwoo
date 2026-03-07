@@ -1,18 +1,17 @@
-package controller;
+package com.hobanwoo.controller;
 
-import dto.ApiResponse;
-import dto.ResponseQuestion;
-import dto.SurveyResult;
-import dto.SurveyResultResponse;
+import com.hobanwoo.dto.ApiResponse;
+import com.hobanwoo.dto.ResponseQuestion;
+import com.hobanwoo.dto.SurveyResult;
+import com.hobanwoo.dto.SurveyResultResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import service.SurveyService;
+import com.hobanwoo.service.SurveyService;
 
 @RestController
 @RequiredArgsConstructor

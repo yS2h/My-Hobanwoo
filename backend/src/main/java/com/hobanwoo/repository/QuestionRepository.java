@@ -1,6 +1,6 @@
-package repository;
+package com.hobanwoo.repository;
 
-import entity.Question;
+import com.hobanwoo.entity.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
