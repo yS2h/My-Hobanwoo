@@ -1,5 +1,6 @@
 package com.hobanwoo.controller;
 
+import com.hobanwoo.dto.AnswerDto;
 import com.hobanwoo.dto.ApiResponse;
 import com.hobanwoo.dto.ResponseQuestion;
 import com.hobanwoo.dto.SurveyResult;
@@ -29,15 +30,13 @@ public class SurveyController {
     }
 
     @PostMapping("/submit")
-    public ResponseEntity<SurveyResultResponse> submitSurvey(@RequestBody SurveyResult surveyResult) {
+    public ResponseEntity<SurveyResultResponse> submitSurvey(@RequestBody List<AnswerDto> answers) { // ⬅️ 여기!
 
-        // 1. 프론트에서 넘어온 데이터 확인 (디버깅용)
-        System.out.println("프론트에서 받은 데이터: " + surveyResult.getAnswers());
+        System.out.println("프론트에서 이름 없이 바로 받은 데이터: " + answers);
 
-        // 2. 더미 데이터 삭제! 진짜 서비스 로직 호출해서 MBTI 계산!
-        SurveyResultResponse realResult = surveyService.calculateResult(surveyResult);
+        // 서비스로 넘겨줄 때도 answers 리스트를 바로 넘겨줍니다.
+        SurveyResultResponse realResult = surveyService.calculateResult(answers);
 
-        // 3. 계산된 찐 결과를 프론트엔드로 바로 쏴줍니다
         return ResponseEntity.ok(realResult);
     }
 
