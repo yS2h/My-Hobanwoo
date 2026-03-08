@@ -5,13 +5,14 @@ import com.hobanwoo.dto.ResponseQuestion;
 import com.hobanwoo.dto.SurveyResultResponse;
 import com.hobanwoo.entity.Question;
 import com.hobanwoo.entity.QuestionType;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.hobanwoo.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.hobanwoo.repository.QuestionRepository;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,13 +23,9 @@ public class SurveyService {
     // 1. 질문지 15개 랜덤으로 가져오기
     @Transactional(readOnly = true)
     public List<ResponseQuestion> getSurveyQuestions() {
-        // 모든 질문 가져오기
         List<Question> questions = questionRepository.findAll();
-
-        // 랜덤으로 섞기 (셔플)
         Collections.shuffle(questions);
 
-        // 프론트엔드에 보낼 DTO로 변환 (정답이나 유형 정보는 숨김)
         return questions.stream()
                 .map(q -> new ResponseQuestion(
                         q.getId(),
@@ -39,28 +36,24 @@ public class SurveyService {
                 .collect(Collectors.toList());
     }
 
-    // (이전에 통계 기능 넣으셨다면 @Transactional 유지!)
-    public SurveyResultResponse calculateResult(List<AnswerDto> answers) { // 🌟 파라미터 변경!
+    // 2. 답변 채점 및 MBTI 도출
+    @Transactional
+    public SurveyResultResponse calculateResult(List<AnswerDto> answers) {
 
-        // 1. 점수판 준비
         int eScore = 0, iScore = 0;
         int sScore = 0, nScore = 0;
         int tScore = 0, fScore = 0;
         int jScore = 0, pScore = 0;
 
-        // 2. 사용자의 답변을 하나씩 확인하며 채점
-        for (AnswerDto answer : answers) { // 🌟 꺼낼 필요 없이 바로 List로 반복!
+        for (AnswerDto answer : answers) {
             Question question = questionRepository.findById(answer.getQuestionId())
                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문입니다."));
 
+            // DB 필드명에 맞춰 category 또는 questionType 중 하나를 선택하세요.
             QuestionType type = question.getCategory();
-            String pick = answer.getAnswer(); // 🌟 변수명을 answer로 바꿨으니 getAnswer()로 꺼냅니다!
+            String pick = answer.getAnswer();
 
-            // 🚨 안전망: null 방지 + 공백 제거 + 대소문자 무시하고 "A"인지 확인
             boolean isA = (pick != null && pick.trim().equalsIgnoreCase("A"));
-
-            // 확인용 로그 (잘 들어오는지 궁금할 때 보세요)
-            System.out.println("질문 번호: " + answer.getQuestionId() + " / 처리된 답변: [" + pick + "]");
 
             switch (type) {
                 case EI:
@@ -78,7 +71,6 @@ public class SurveyService {
             }
         }
 
-        // 3. 최종 MBTI 알파벳 조합하기
         StringBuilder mbtiBuilder = new StringBuilder();
         mbtiBuilder.append(eScore >= iScore ? "E" : "I");
         mbtiBuilder.append(sScore >= nScore ? "S" : "N");
@@ -87,16 +79,12 @@ public class SurveyService {
 
         String finalMbti = mbtiBuilder.toString();
 
-        System.out.println("계산된 최종 MBTI: " + finalMbti);
+        // 통계 기능이 있다면 여기서 호출: updateStats(finalMbti);
 
-        // (선택) 아까 통계 기능 updateStats(finalMbti); 를 만드셨다면 여기에서 호출!
-        // updateStats(finalMbti);
-
-        // 4. MBTI에 맞는 호반우 결과 데이터 반환
         return createResultResponse(finalMbti);
     }
 
-
+    // 3. MBTI 결과 데이터 매핑
     private SurveyResultResponse createResultResponse(String mbti) {
         switch (mbti) {
             case "ESTJ":
@@ -141,6 +129,13 @@ public class SurveyService {
                         .image("🐮")
                         .details(List.of("술자리에서 밤새 말싸움(토론)하는 논리왕"))
                         .build();
+            case "ISFP":
+                return SurveyResultResponse.builder()
+                        .resultType("뒷공부우~")
+                        .description("\"제출 마감 1분 전에 냈우! 심장 쫄깃하우.\"")
+                        .image("🐮")
+                        .details(List.of("뒤에서 몰래 공부 할 거 다 하는 집콕러"))
+                        .build();
             case "ENFJ":
                 return SurveyResultResponse.builder()
                         .resultType("우리는모두친우")
@@ -175,13 +170,6 @@ public class SurveyService {
                         .description("\"이번 학기도 전액 장학금은 내 거우.\"")
                         .image("🐮")
                         .details(List.of("조용히 뒤에서 할 일 다 하고 장학금 타감"))
-                        .build();
-            case "ISFP":
-                return SurveyResultResponse.builder()
-                        .resultType("뒷공부우~")
-                        .description("\"제출 마감 1분 전에 냈우! 심장 쫄깃하우.\"")
-                        .image("🐮")
-                        .details(List.of("뒤에서 몰래 공부 할 거 다 하는 집콕러"))
                         .build();
             case "INTJ":
                 return SurveyResultResponse.builder()
@@ -220,7 +208,4 @@ public class SurveyService {
                         .build();
         }
     }
-
-
-
 }
