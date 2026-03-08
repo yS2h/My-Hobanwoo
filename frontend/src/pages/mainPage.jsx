@@ -1,6 +1,28 @@
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { API_ENDPOINTS } from "../utils/api";
+
 function MainPage() {
   const navigate = useNavigate();
+  const [totalParticipants, setTotalParticipants] = useState(0);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await fetch(API_ENDPOINTS.STATS);
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.totalParticipants)
+          setTotalParticipants(data.totalParticipants || 0);
+        }
+      } catch (error) {
+        console.error('참여자 수 조회 실패:', error);
+        // 에러 발생 시 0으로 유지
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   const handleStart = () => {
     navigate("/survey");
@@ -24,8 +46,9 @@ function MainPage() {
 
           <button className="start-button" onClick={handleStart}>
             <span className="button-text-main">시작하기</span>
-            <span className="button-text-sub">지금까지 ~학우가 확인했어요</span>
-            {/* 여기 ~ 숫자 나중에 db에서 받아오깅 */}
+            <span className="button-text-sub">
+              지금까지 {totalParticipants.toLocaleString()}명이 확인했어요
+            </span>
           </button>
         </div>
       </div>

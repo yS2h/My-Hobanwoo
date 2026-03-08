@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_ENDPOINTS } from "../utils/api";
 
 function SurveyPage() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function SurveyPage() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch('https://my-hobanwoo.onrender.com/survey');
+        const response = await fetch(API_ENDPOINTS.SURVEY);
         if (!response.ok) {
           throw new Error('질문을 불러오는데 실패했습니다.');
         }

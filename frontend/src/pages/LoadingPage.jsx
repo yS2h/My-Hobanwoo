@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { API_ENDPOINTS } from "../utils/api";
 
 function LoadingPage() {
   const navigate = useNavigate();
@@ -17,13 +18,14 @@ function LoadingPage() {
     // 백엔드에 답변 전송 및 결과 받기
     const submitAnswers = async () => {
       try {
-        const response = await fetch('https://my-hobanwoo.onrender.com/submit', {
+        const response = await fetch(API_ENDPOINTS.SUBMIT, {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json' 
           },
-          body: JSON.stringify({ answers })
+          body: JSON.stringify( answers )
         });
+        console.log(answers)
         
         if (!response.ok) {
           throw new Error('결과를 불러오는데 실패했습니다.');
