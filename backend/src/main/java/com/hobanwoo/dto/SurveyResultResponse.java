@@ -11,4 +11,5 @@ public class SurveyResultResponse {
     private String description;
     private String image;
     private List<String> details;
+    private String shareCode;
 }

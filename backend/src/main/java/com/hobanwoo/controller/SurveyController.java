@@ -43,21 +43,16 @@ public class SurveyController {
     }
 
     @PostMapping("/submit")
-    public ResponseEntity<Map<String, Object>> submitSurvey(@RequestBody List<AnswerDto> answers) {
+    public ResponseEntity<SurveyResultResponse> submitSurvey(@RequestBody List<AnswerDto> answers) {
 
-        // 기존 결과 계산 및 통계 업데이트
+        // 1. 서비스 내부에서 결과 계산 + 통계 업데이트 + 난수 생성까지 한 번에 처리됨
         SurveyResultResponse realResult = surveyService.calculateResult(answers);
+
+        // 2. 통계 업데이트 (서비스 내부 호출로 옮기지 않았다면 여기서 유지)
         surveyService.updateStats(realResult.getResultType());
 
-        // ✨ 새로 만든 서비스 메서드로 시간 난수 생성 & 저장 ✨
-        String shareCode = surveyService.createShareCode(realResult.getResultType());
-
-        // 결과 데이터와 shareCode를 묶어서 보냅니다.
-        Map<String, Object> response = new HashMap<>();
-        response.put("result", realResult);
-        response.put("shareCode", shareCode);
-
-        return ResponseEntity.ok(response);
+        // 3. 이미 realResult 안에 shareCode가 들어있으므로, 맵을 따로 만들 필요 없이 바로 반환!
+        return ResponseEntity.ok(realResult);
     }
 
     @GetMapping("/result/{shareCode}")
