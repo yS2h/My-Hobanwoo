@@ -1,103 +1,98 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { shareNative, copyToClipboard, saveAsImage } from '../utils/share';
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function ResultPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const result = location.state?.result;
 
-  // 백엔드에서 결과를 받지 못한 경우 메인으로 이동
-  if (!result) {
-    navigate('/');
-    return null;
-  }
+  const serverResult = location.state?.result;
 
-  const handleRestart = () => {
-    navigate('/');
+  const imageMap = {
+    출석업고튀우: "/images/results/ISTP.png",
+    중앙도서관우: "/images/results/ISTJ.png",
+    뒷공부우: "/images/results/ISFP.png",
+    전액장학우: "/images/results/ISFJ.png",
+    일청담에서살우: "/images/results/INTP.png",
+    공강이제일좋우: "/images/results/INTJ.png",
+    이불밖은싫우: "/images/results/INFP.png",
+    감성브이록우: "/images/results/INFJ.png",
+    럭키카우: "/images/results/ESFP.png",
+    내말이다맞우: "/images/results/ENTP.png",
+    야망있우: "/images/results/ENTJ.png",
+    투쁠우: "/images/results/ESFJ.png",
+    치타는웃고있우: "/images/results/ESTP.png",
+    학생회장우: "/images/results/ESTJ.png",
+    오늘만살우: "/images/results/ENFP.png",
+    우리는모두친우: "/images/results/ENFJ.png",
   };
 
-  const handleShare = async () => {
-    const shareUrl = window.location.origin;
-    const shareTitle = '호반우 테스트';
-    const shareText = `나는 ${result.resultType}! 너는 어떤 호반우?`;
-
-    const success = await shareNative(shareTitle, shareText, shareUrl);
-    
-    if (success) {
-      alert('공유 완료!');
-    } else {
-      const copied = await copyToClipboard(shareUrl);
-      if (copied) {
-        alert('링크가 복사되었습니다!');
-      } else {
-        alert('공유에 실패했습니다.');
-      }
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (!serverResult) {
+      navigate("/");
     }
-  };
+  }, [serverResult, navigate]);
 
-  const handleSaveImage = async () => {
-    const success = await saveAsImage('result-card', `${result.resultType}.png`);
-    
-    if (success) {
-      alert('이미지가 저장되었습니다!');
-    } else {
-      alert('이미지 저장에 실패했습니다.');
-    }
+  if (!serverResult) return null;
+
+  const handleShare = () => {
+    const currentUrl = window.location.href;
+    navigator.clipboard
+      .writeText(currentUrl)
+      .then(() => alert("링크가 클립보드에 복사되었습니다!"))
+      .catch(() => alert("복사에 실패했습니다."));
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-100 to-purple-100 p-4">
-      <div id="result-card" className="bg-white rounded-3xl shadow-xl p-8 max-w-2xl w-full text-center">
-        <div className="text-8xl mb-6">
-          {result.image}
+    <div className="mobile-container">
+      <div className="result-page-final">
+        <div className="result-image-section">
+          <img
+            src={
+              imageMap[serverResult.resultType] || "/images/results/default.png"
+            }
+            alt="호반우 증명서"
+            className="result-main-image"
+          />
         </div>
-        
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">
-          당신은...
-        </h1>
-        
-        <h2 className="text-5xl font-bold text-purple-600 mb-8">
-          {result.resultType}
-        </h2>
-        
-        <p className="text-xl text-gray-600 mb-8 leading-relaxed" style={{ whiteSpace: 'pre-line' }}>
-          {result.description}
+
+        <p
+          style={{
+            marginTop: "10px",
+            color: "#000000",
+            textAlign: "center",
+          }}
+        >
+          ▲ 이미지 꾹 눌러 저장하기 ▲
         </p>
 
-        {/* details가 있으면 표시 */}
-        {result.details && result.details.length > 0 && (
-          <div className="text-left bg-purple-50 rounded-2xl p-6 mb-8">
-            <ul className="space-y-2">
-              {result.details.map((detail, index) => (
-                <li key={index} className="text-gray-700">
-                  • {detail}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <div className="result-detail-box">
+          <p className="description-text">{serverResult.description}</p>
+        </div>
 
-        <div className="flex flex-col gap-3">
-          <div className="flex gap-3 justify-center">
-            <button
-              onClick={handleRestart}
-              className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-full transition-all transform hover:scale-105"
-            >
-              다시 하기
-            </button>
-            <button
-              onClick={handleShare}
-              className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-full transition-all transform hover:scale-105"
-            >
-              결과 공유하기
-            </button>
-          </div>
-          
-          <button
-            onClick={handleSaveImage}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full transition-all transform hover:scale-105 mx-auto"
-          >
-            이미지로 저장
+        <div className="result-detail-box statistics-box">
+          <div className="stats-circle-placeholder">그래프</div>
+          <p className="stats-summary-text">
+            설문자 전체 중 <strong>{serverResult.percentage}%</strong> 입니다.
+          </p>
+        </div>
+
+        <p
+          style={{
+            marginTop: "40px",
+            color: "#888",
+            textDecoration: "underline",
+            cursor: "pointer",
+            textAlign: "center",
+          }}
+          onClick={() => navigate("/")}
+        >
+          테스트 다시하기
+        </p>
+
+        <div className="floating-share-bar">
+          <button className="share-action-button" onClick={handleShare}>
+            결과 공유하기
           </button>
         </div>
       </div>
