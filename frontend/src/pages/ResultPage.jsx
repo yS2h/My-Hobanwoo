@@ -6,28 +6,26 @@ function ResultPage() {
   const navigate = useNavigate();
   const result = location.state?.result;
 
-  // 백엔드에서 결과를 받기 전 임시 데이터
-  const resultData = result || {
-    type: "내성적인 호반우",
-    description: "혼자만의 시간을 즐기는 당신! 조용한 카페에서 책 읽는 게 제일 행복해요.",
-    image: "🐮"
-  };
+  // 백엔드에서 결과를 받지 못한 경우 메인으로 이동
+  if (!result) {
+    navigate('/');
+    return null;
+  }
 
   const handleRestart = () => {
     navigate('/');
   };
 
   const handleShare = async () => {
-    const shareUrl = window.location.origin; // 배포 후에는 실제 URL
+    const shareUrl = window.location.origin;
     const shareTitle = '호반우 테스트';
-    const shareText = `나는 ${resultData.type}! 너는 어떤 호반우?`;
+    const shareText = `나는 ${result.resultType}! 너는 어떤 호반우?`;
 
     const success = await shareNative(shareTitle, shareText, shareUrl);
     
     if (success) {
       alert('공유 완료!');
     } else {
-      // 공유 실패 시 URL 복사
       const copied = await copyToClipboard(shareUrl);
       if (copied) {
         alert('링크가 복사되었습니다!');
@@ -38,7 +36,7 @@ function ResultPage() {
   };
 
   const handleSaveImage = async () => {
-    const success = await saveAsImage('result-card', `${resultData.type}.png`);
+    const success = await saveAsImage('result-card', `${result.resultType}.png`);
     
     if (success) {
       alert('이미지가 저장되었습니다!');
@@ -49,10 +47,9 @@ function ResultPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-100 to-purple-100 p-4">
-      {/* 이미지 저장용 ID 추가 */}
       <div id="result-card" className="bg-white rounded-3xl shadow-xl p-8 max-w-2xl w-full text-center">
         <div className="text-8xl mb-6">
-          {resultData.image}
+          {result.image}
         </div>
         
         <h1 className="text-4xl font-bold text-gray-800 mb-4">
@@ -60,12 +57,25 @@ function ResultPage() {
         </h1>
         
         <h2 className="text-5xl font-bold text-purple-600 mb-8">
-          {resultData.type}
+          {result.resultType}
         </h2>
         
-        <p className="text-xl text-gray-600 mb-12 leading-relaxed">
-          {resultData.description}
+        <p className="text-xl text-gray-600 mb-8 leading-relaxed" style={{ whiteSpace: 'pre-line' }}>
+          {result.description}
         </p>
+
+        {/* details가 있으면 표시 */}
+        {result.details && result.details.length > 0 && (
+          <div className="text-left bg-purple-50 rounded-2xl p-6 mb-8">
+            <ul className="space-y-2">
+              {result.details.map((detail, index) => (
+                <li key={index} className="text-gray-700">
+                  • {detail}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <div className="flex flex-col gap-3">
           <div className="flex gap-3 justify-center">
