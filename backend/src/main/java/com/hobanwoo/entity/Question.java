@@ -19,7 +19,6 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
     private String question; //질문
     private String optionA; //대답 A
     private String optionB; //대답 A

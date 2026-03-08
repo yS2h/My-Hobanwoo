@@ -29,24 +29,16 @@ public class SurveyController {
     }
 
     @PostMapping("/submit")
-    public ApiResponse<SurveyResultResponse> submitSurvey(@RequestBody SurveyResult surveyResult) { // 여기도 변경!
+    public ResponseEntity<SurveyResultResponse> submitSurvey(@RequestBody SurveyResult surveyResult) {
 
-        // 1. 프론트에서 온 데이터 확인 (콘솔 출력)
-        System.out.println("프론트에서 온 데이터: " + surveyResult.getAnswers());
+        // 1. 프론트에서 넘어온 데이터 확인 (디버깅용)
+        System.out.println("프론트에서 받은 데이터: " + surveyResult.getAnswers());
 
-        // 2. 가짜(Dummy) 데이터 응답
-        SurveyResultResponse dummyResult = SurveyResultResponse.builder()
-                .resultType("내성적인 호반우")
-                .description("혼자만의 시간을 즐기는 당신! 조용한 카페에서 책 읽는 게 제일 행복해요.")
-                .image("🐮")
-                .details(List.of(
-                        "사람 많은 곳보다 조용한 공간을 선호해요",
-                        "혼자 있는 시간이 소중해요",
-                        "깊은 대화를 나눌 수 있는 소수의 친구가 있어요"
-                ))
-                .build();
+        // 2. 더미 데이터 삭제! 진짜 서비스 로직 호출해서 MBTI 계산!
+        SurveyResultResponse realResult = surveyService.calculateResult(surveyResult);
 
-        // 3. 규격에 맞게 포장해서 반환
-        return new ApiResponse<>(true, dummyResult);
+        // 3. 계산된 찐 결과를 프론트엔드로 바로 쏴줍니다
+        return ResponseEntity.ok(realResult);
     }
+
 }
