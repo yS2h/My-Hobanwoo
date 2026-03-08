@@ -18,6 +18,7 @@ function LoadingPage() {
     // 백엔드에 답변 전송 및 결과 받기
     const submitAnswers = async () => {
       try {
+        console.log("결과요청")
         const response = await fetch(API_ENDPOINTS.SUBMIT, {
           method: 'POST',
           headers: { 
