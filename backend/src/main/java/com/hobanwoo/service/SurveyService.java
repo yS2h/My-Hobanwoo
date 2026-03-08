@@ -5,6 +5,7 @@ import com.hobanwoo.dto.ResponseQuestion;
 import com.hobanwoo.dto.SurveyResultResponse;
 import com.hobanwoo.entity.Question;
 import com.hobanwoo.entity.QuestionType;
+import com.hobanwoo.repository.MbtiStatRepository;
 import com.hobanwoo.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,24 @@ import java.util.stream.Collectors;
 public class SurveyService {
 
     private final QuestionRepository questionRepository;
+    private final MbtiStatRepository mbtiStatRepository;
+
+    @Transactional
+    public void updateStats(String mbti) {
+        // 이미 DB에 'ENTJ' 같은 데이터가 0인 상태로 존재하므로,
+        // 조회 없이 바로 +1 업데이트를 날립니다.
+        int result = mbtiStatRepository.incrementCount(mbti);
+
+        // (선택사항) 만약 잘못된 MBTI 값이 들어와서 업데이트된 행이 없다면 예외 처리
+        if (result == 0) {
+            throw new IllegalArgumentException("존재하지 않는 MBTI 타입입니다: " + mbti);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public Long getTotalParticipants() {
+        return mbtiStatRepository.getTotalParticipantCount();
+    }
 
     // 1. 질문지 15개 랜덤으로 가져오기
     @Transactional(readOnly = true)
