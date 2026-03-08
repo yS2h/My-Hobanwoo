@@ -5,5 +5,6 @@ export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://my-hobanwoo
 export const API_ENDPOINTS = {
   SURVEY: `${API_BASE_URL}/survey`,
   LOADING: `${API_BASE_URL}/loading`,
-  SUBMIT: `${API_BASE_URL}/submit`
+  SUBMIT: `${API_BASE_URL}/submit`,
+  STATS: `${API_BASE_URL}/stats`
 };
