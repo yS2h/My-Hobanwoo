@@ -5,8 +5,10 @@ import com.hobanwoo.dto.ResponseQuestion;
 import com.hobanwoo.dto.SurveyResultResponse;
 import com.hobanwoo.entity.Question;
 import com.hobanwoo.entity.QuestionType;
+import com.hobanwoo.entity.SharedResult;
 import com.hobanwoo.repository.MbtiStatRepository;
 import com.hobanwoo.repository.QuestionRepository;
+import com.hobanwoo.repository.SharedResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,7 @@ public class SurveyService {
 
     private final QuestionRepository questionRepository;
     private final MbtiStatRepository mbtiStatRepository;
+    private final SharedResultRepository sharedResultRepository;
 
     @Transactional
     public void updateStats(String mbti) {
@@ -226,5 +229,19 @@ public class SurveyService {
                         .details(List.of("알 수 없는 매력의 소유자"))
                         .build();
         }
+    }
+
+    public String createShareCode(String resultType) {
+        String shareCode = String.valueOf(System.currentTimeMillis()); // 13자리 난수 생성
+        SharedResult sharedResult = new SharedResult(shareCode, resultType);
+        sharedResultRepository.save(sharedResult); // 새 테이블에 쾅! 저장
+        return shareCode;
+    }
+
+    // 2. 남들이 링크 눌렀을 때, 난수로 결과를 찾아주는 메서드
+    public String getSharedResultType(String shareCode) {
+        SharedResult sharedResult = sharedResultRepository.findByShareCode(shareCode)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않거나 잘못된 공유 링크입니다."));
+        return sharedResult.getResultType();
     }
 }

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,17 +43,33 @@ public class SurveyController {
     }
 
     @PostMapping("/submit")
-    public ResponseEntity<SurveyResultResponse> submitSurvey(@RequestBody List<AnswerDto> answers) { // ⬅️ 여기!
+    public ResponseEntity<Map<String, Object>> submitSurvey(@RequestBody List<AnswerDto> answers) {
 
-        System.out.println("프론트에서 이름 없이 바로 받은 데이터: " + answers);
-
-        // 서비스로 넘겨줄 때도 answers 리스트를 바로 넘겨줍니다.
+        // 기존 결과 계산 및 통계 업데이트
         SurveyResultResponse realResult = surveyService.calculateResult(answers);
-
-
         surveyService.updateStats(realResult.getResultType());
 
-        return ResponseEntity.ok(realResult);
+        // ✨ 새로 만든 서비스 메서드로 시간 난수 생성 & 저장 ✨
+        String shareCode = surveyService.createShareCode(realResult.getResultType());
+
+        // 결과 데이터와 shareCode를 묶어서 보냅니다.
+        Map<String, Object> response = new HashMap<>();
+        response.put("result", realResult);
+        response.put("shareCode", shareCode);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/result/{shareCode}")
+    public ResponseEntity<Map<String, String>> getSharedResult(@PathVariable String shareCode) {
+
+        // 서비스에서 난수로 결과 타입 찾아오기
+        String resultType = surveyService.getSharedResultType(shareCode);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("resultType", resultType);
+
+        return ResponseEntity.ok(response);
     }
 
 }
