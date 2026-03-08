@@ -20,8 +20,8 @@ public class Question {
     private Long id;
 
     private String question; //질문
-    private String optionA; //대답 A
-    private String optionB; //대답 A
+    private String option_A; //대답 A
+    private String option_B; //대답 A
 
     @Enumerated(EnumType.STRING)
     private QuestionType category;

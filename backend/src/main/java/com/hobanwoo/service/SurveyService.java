@@ -49,8 +49,8 @@ public class SurveyService {
                 .map(q -> new ResponseQuestion(
                         q.getId(),
                         q.getQuestion(),
-                        q.getOptionA(),
-                        q.getOptionB()
+                        q.getOption_A(),
+                        q.getOption_B()
                 ))
                 .collect(Collectors.toList());
     }
