@@ -3,7 +3,6 @@ package com.hobanwoo.controller;
 import com.hobanwoo.dto.AnswerDto;
 import com.hobanwoo.dto.ApiResponse;
 import com.hobanwoo.dto.ResponseQuestion;
-import com.hobanwoo.dto.SurveyResult;
 import com.hobanwoo.dto.SurveyResultResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
