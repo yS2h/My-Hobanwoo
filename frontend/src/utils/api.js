@@ -7,5 +7,6 @@ export const API_ENDPOINTS = {
   SURVEY: `${API_BASE_URL}/survey`,
   LOADING: `${API_BASE_URL}/loading`,
   SUBMIT: `${API_BASE_URL}/submit`,
-  STATS: `${API_BASE_URL}/stats`
+  STATS: `${API_BASE_URL}/stats`,
+  RESULT : `${API_BASE_URL}/result`
 };

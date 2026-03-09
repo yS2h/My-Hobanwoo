@@ -1,22 +1,61 @@
-import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { API_BASE_URL } from "../utils/api";
+import { useEffect, useState, useRef } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { API_BASE_URL, API_ENDPOINTS } from "../utils/api";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-
-const dummyData = 8;
 
 function ResultPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { shareCode } = useParams();
 
-  const serverResult = location.state?.result;
+  const [serverResult, setServerResult] = useState(location.state?.result || null);
+  const [loading, setLoading] = useState(true);
+  const hasFetched = useRef(false); // ✅ 한 번만 호출했는지 체크
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (!serverResult) {
-      navigate("/");
+
+    // ✅ 이미 API 호출했으면 스킵
+    if (hasFetched.current) {
+      return;
     }
-  }, [serverResult, navigate]);
+
+    const fetchResult = async () => {
+      try {
+        const response = await fetch(`${API_ENDPOINTS.RESULT}/${shareCode}`);
+        
+        if (!response.ok) {
+          throw new Error('결과를 찾을 수 없습니다.');
+        }
+        
+        const data = await response.json();
+        setServerResult(data);
+        hasFetched.current = true; // ✅ 호출 완료 표시
+      } catch (error) {
+        console.error('결과 조회 실패:', error);
+        alert('결과를 불러올 수 없습니다.');
+        navigate('/');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (shareCode) {
+      fetchResult();
+    } else {
+      navigate('/');
+    }
+  }, [shareCode, navigate]); // ✅ serverResult 제거
+
+  if (loading) {
+    return (
+      <div className="mobile-container">
+        <div className="loading-container">
+          <h2 className="loading-title">결과 불러오는 중...</h2>
+        </div>
+      </div>
+    );
+  }
 
   if (!serverResult) return null;
 
@@ -27,9 +66,10 @@ function ResultPage() {
       .then(() => alert("링크가 클립보드에 복사되었습니다!"))
       .catch(() => alert("복사에 실패했습니다."));
   };
-  const imgUrl = API_BASE_URL + serverResult.image;
 
-  const myPercent = parseFloat(dummyData) || 0;
+  const imgUrl = API_BASE_URL + serverResult.image;
+  const myPercent = parseFloat(serverResult.percentage) || 0;
+
   const chartData = [
     { name: "나의 결과", value: myPercent },
     { name: "나머지", value: 100 - myPercent },
@@ -73,11 +113,9 @@ function ResultPage() {
             호반우 분포도
           </h3>
 
-          {/* 모던 도넛 차트 */}
           <div style={{ position: "relative", width: "100%", height: "220px" }}>
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                {/* 배경 원 (회색) */}
                 <Pie
                   data={[{ value: 100 }]}
                   cx="50%"
@@ -92,7 +130,6 @@ function ResultPage() {
                   <Cell fill="#E8E8F0" />
                 </Pie>
 
-                {/* 실제 데이터 (보라색) */}
                 <Pie
                   data={chartData}
                   cx="50%"
@@ -105,23 +142,22 @@ function ResultPage() {
                   stroke="none"
                   cornerRadius={10}
                 >
-                  <Cell fill="#D75555" />
+                  <Cell fill="#A31919" />
                   <Cell fill="transparent" />
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
 
-            {/* 중앙 텍스트 */}
             <div
               style={{
                 position: "absolute",
-                top: "50%",
+                top: "45%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 textAlign: "center",
               }}
             >
-              <div style={{ fontSize: "12px", color: "#666", marginBottom: "5px" }}>
+              <div style={{ fontSize: "12px", color: "#666", marginBottom: "0px" }}>
                 Total
               </div>
               <div style={{ fontSize: "36px", fontWeight: "bold", color: "#333" }}>

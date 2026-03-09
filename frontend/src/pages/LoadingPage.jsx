@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, } from "react-router-dom";
 import { API_ENDPOINTS } from "../utils/api";
 
 function LoadingPage() {
@@ -33,9 +33,12 @@ function LoadingPage() {
         }
         
         const result = await response.json();
-        
+        console.log(result)
         // 결과 페이지로 이동
-        navigate('/result', { state: { result } });
+        navigate(`/result/${result.shareCode}`, { 
+          state: { result },
+          replace : true,
+      });
       } catch (error) {
         console.error('Error submitting answers:', error);
         alert('결과를 불러오는데 실패했습니다. 다시 시도해주세요.');
