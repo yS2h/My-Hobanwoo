@@ -28,37 +28,22 @@ INSERT INTO question (id, question, option_a, option_b, category) VALUES
                                                                       (14, '마음에 드는 사람을 발견했다. \n당신의 행동은? ', '일단 직진!!\n인스타 스토리 답장으로 대화를 시작한다.', '나한테 스며들게 하기\n잘 보이기위해 예쁜 옷을 입고 등교한다.', 'NONE'),
                                                                       (15, '이 테스트를 하고 있는 나의 기분은? ', '궁금증\n결과가 어떻게 나올지 궁금해서 빨리 보고 싶다.', '귀찮음…\n답변 누르는 게 귀찮다.', 'NONE');
 
--- 1. 혹시 모를 꼬임을 방지하기 위해 기존 테이블 초기화
-DROP TABLE IF EXISTS mbti_stat;
 
--- 2. 통계를 저장할 테이블을 넉넉한 크기(50자)로 새로 생성
-CREATE TABLE mbti_stat (
-                           mbti VARCHAR(50) PRIMARY KEY,
-                           count BIGINT DEFAULT 0
-);
 
--- 3. 16개 호반우 캐릭터 초기 데이터 0으로 세팅
 INSERT INTO mbti_stat (mbti, count) VALUES
-                                        ('학생회장우', 0),
-                                        ('치타는웃고있우', 0),
-                                        ('투쁠우', 0),
-                                        ('럭키카우', 0),
-                                        ('야망있우', 0),
-                                        ('내말이다맞우', 0),
-                                        ('뒷공부우~', 0),
-                                        ('우리는모두친우', 0),
-                                        ('오늘만살우', 0),
-                                        ('중앙도서 관우', 0),
-                                        ('출석업고튀우', 0),
-                                        ('전액장학우', 0),
-                                        ('공강이제일좋우', 0),
-                                        ('일청담에서살우', 0),
-                                        ('감성브이록우', 0),
-                                        ('이불밖은싫우', 0)
-ON CONFLICT (mbti) DO NOTHING;
+                                        ('ESTJ', 0), ('ESTP', 0), ('ESFJ', 0), ('ESFP', 0),
+                                        ('ENTJ', 0), ('ENTP', 0), ('ENFJ', 0), ('ENFP', 0),
+                                        ('ISTJ', 0), ('ISTP', 0), ('ISFJ', 0), ('ISFP', 0),
+                                        ('INTJ', 0), ('INTP', 0), ('INFJ', 0), ('INFP', 0);
+
+COMMIT;
 
 CREATE TABLE shared_result (
                                id SERIAL PRIMARY KEY,
                                share_code VARCHAR(255) NOT NULL UNIQUE,
                                result_type VARCHAR(255) NOT NULL
 );
+
+
+
+

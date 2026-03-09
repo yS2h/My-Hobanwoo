@@ -115,7 +115,7 @@ public class SurveyService {
             case "ESTJ":
                 return SurveyResultResponse.builder()
                         .resultType("학생회장우")
-                        .description("\"나를 따르라우! A+로 이끌어주겠우.\"")
+                        .description("\"나를 따르라우! A+로 이끌어주겠우. ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ\"")
                         .image("/images/ESTJ.png")
                         .percentage(percentage)
                         .build();
@@ -249,7 +249,7 @@ public class SurveyService {
     // 2. 남들이 링크 눌렀을 때, 난수로 결과를 찾아주는 메서드
     @Transactional(readOnly = true)
     public SurveyResultResponse getSharedResultWithPercentage(String shareCode) {
-// 1) 공유 코드로 MBTI 결과 찾기
+        // 1) 공유 코드로 MBTI 결과 찾기
         SharedResult sharedResult = sharedResultRepository.findByShareCode(shareCode)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않거나 잘못된 공유 링크입니다."));
         String mbti = sharedResult.getResultType();
