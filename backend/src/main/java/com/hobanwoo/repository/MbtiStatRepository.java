@@ -15,4 +15,7 @@ public interface MbtiStatRepository extends JpaRepository<MbtiStat, String> {
 
     @Query("SELECT COALESCE(SUM(m.count), 0) FROM MbtiStat m")
     Long getTotalParticipantCount();
+
+    @Query("SELECT m.count FROM MbtiStat m WHERE m.mbti = :mbti")
+    Long getCountByMbti(@Param("mbti") String mbti);
 }

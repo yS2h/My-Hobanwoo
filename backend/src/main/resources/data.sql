@@ -56,3 +56,9 @@ INSERT INTO mbti_stat (mbti, count) VALUES
                                         ('감성브이록우', 0),
                                         ('이불밖은싫우', 0)
 ON CONFLICT (mbti) DO NOTHING;
+
+CREATE TABLE shared_result (
+                               id SERIAL PRIMARY KEY,
+                               share_code VARCHAR(255) NOT NULL UNIQUE,
+                               result_type VARCHAR(255) NOT NULL
+);

@@ -43,28 +43,22 @@ public class SurveyController {
     }
 
     @PostMapping("/submit")
-    public ResponseEntity<SurveyResultResponse> submitSurvey(@RequestBody List<AnswerDto> answers) {
+    public ResponseEntity<Map<String,String>> submitSurvey(@RequestBody List<AnswerDto> answers) {
+        String realResult = surveyService.calculateResult(answers);
 
-        // 1. 서비스 내부에서 결과 계산 + 통계 업데이트 + 난수 생성까지 한 번에 처리됨
-        SurveyResultResponse realResult = surveyService.calculateResult(answers);
+        Map<String, String> response = new HashMap<>();
+        response.put("shareCode", realResult);
 
-        // 2. 통계 업데이트 (서비스 내부 호출로 옮기지 않았다면 여기서 유지)
-        surveyService.updateStats(realResult.getResultType());
-
-        // 3. 이미 realResult 안에 shareCode가 들어있으므로, 맵을 따로 만들 필요 없이 바로 반환!
-        return ResponseEntity.ok(realResult);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/result/{shareCode}")
-    public ResponseEntity<Map<String, String>> getSharedResult(@PathVariable String shareCode) {
+    public ResponseEntity<SurveyResultResponse> getSharedResult(@PathVariable String shareCode) {
 
-        // 서비스에서 난수로 결과 타입 찾아오기
-        String resultType = surveyService.getSharedResultType(shareCode);
+        // Service에서 MBTI 조회 + 백분율 계산 + DTO 조립을 한 번에 처리해서 가져옵니다.
+        SurveyResultResponse resultResponse = surveyService.getSharedResultWithPercentage(shareCode);
 
-        Map<String, String> response = new HashMap<>();
-        response.put("resultType", resultType);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(resultResponse);
     }
 
 }

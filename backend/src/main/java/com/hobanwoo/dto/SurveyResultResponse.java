@@ -10,6 +10,5 @@ public class SurveyResultResponse {
     private String resultType;
     private String description;
     private String image;
-    private List<String> details;
-    private String shareCode;
+    private double percentage;
 }
