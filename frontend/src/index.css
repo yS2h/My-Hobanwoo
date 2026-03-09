@@ -52,7 +52,7 @@ body {
   width: 100%;
   max-width: 357px;
   height: 65px;
-  background-color: #d7557e;
+  background-color: #A31919; /* 통일 색상 */
   border-radius: 64px;
   border: none;
   color: white;
@@ -61,6 +61,11 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: all 0.2s ease;
+}
+
+.start-button:hover {
+  background-color: #8A1515; /* 약간 어두운 hover */
 }
 
 .start-button:active {
@@ -94,15 +99,15 @@ body {
 .progress-container {
   width: 100%;
   height: 12px;
-  background-color: #fce4ec;
+  background-color: #FFEAEA; /* #A31919의 연한 버전 */
   border-radius: 10px;
-  margin-bottom: px;
+  margin-bottom: 20px;
   overflow: hidden;
 }
 
 .progress-bar {
   height: 100%;
-  background-color: #d7557e;
+  background-color: #A31919; /* 통일 색상 */
   transition: width 0.3s ease-in-out;
 }
 
@@ -152,18 +157,25 @@ body {
   width: 100%;
   min-height: 70px;
   background-color: white;
-  border: 2px solid #d7557e;
+  border: 2px solid #A31919; /* 통일 색상 */
   border-radius: 64px;
   padding: 5px 25px;
   font-size: 18px;
   font-weight: bold;
-  color: #d7557e;
+  color: #A31919; /* 통일 색상 */
   white-space: pre-line;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.answer-button:hover {
+  background-color: #FFEAEA;
+  border-color: #8A1515;
+  color: #8A1515;
 }
 
 .answer-button:active {
-  background-color: #fff0f5;
+  background-color: #FFD6D6;
   transform: scale(0.97);
 }
 
@@ -207,7 +219,7 @@ body {
 .loading-title {
   font-size: 28px;
   font-weight: bold;
-  color: #d7557e;
+  color: #A31919; /* 통일 색상 */
   margin-bottom: 15px;
   animation: pulse 1.5s infinite;
 }
@@ -239,9 +251,9 @@ body {
 }
 
 .result-image-section {
-  width: 100%;
+  width: 90%;
   max-width: 420px;
-  margin-top: 0;
+  margin-top: 15px;
   line-height: 0;
 }
 
@@ -268,15 +280,19 @@ body {
 .share-action-button {
   width: 100%;
   height: 60px;
-  background-color: #d75555;
+  background-color: #A31919; /* 통일 색상 */
   color: #ffffff;
   border: none;
   border-radius: 35px;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  transition: transform 0.1s ease;
+  box-shadow: 0 4px 15px rgba(163, 25, 25, 0.3); /* 색상 매칭 그림자 */
+  transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
+.share-action-button:hover {
+  background-color: #8A1515;
 }
 
 .share-action-button:active {
@@ -290,7 +306,7 @@ body {
   border-radius: 15px;
   padding: 30px;
   margin-top: 15px;
-  border: 1px solid #eaeaea;
+  border: 1px solid #FFEAEA; /* 연한 색상으로 테두리 */
   box-sizing: border-box;
 }
 
@@ -312,18 +328,23 @@ body {
 .stats-circle-placeholder {
   width: 180px;
   height: 180px;
-  background-color: #e0e0e0;
+  background-color: #FFEAEA; /* 연한 색상 */
   border-radius: 50%;
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #888;
+  color: #A31919; /* 통일 색상 */
   font-size: 14px;
+  font-weight: bold;
 }
 
 .stats-summary-text {
   font-size: 18px;
   font-weight: bold;
   color: #000;
+}
+
+.stats-summary-text strong {
+  color: #A31919; /* 통일 색상 */
 }

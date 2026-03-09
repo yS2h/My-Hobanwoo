@@ -17,7 +17,7 @@ function MainPage() {
         }
       } catch (error) {
         console.error('참여자 수 조회 실패:', error);
-        // 에러 발생 시 0으로 유지
+        // 에러 발생 시 0으로 유지S
       }
     };
 
