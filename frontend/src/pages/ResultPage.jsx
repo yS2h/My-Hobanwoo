@@ -29,13 +29,11 @@ function ResultPage() {
   };
   const imgUrl = API_BASE_URL + serverResult.image;
 
-  // 여기 나중에 받아오는 거로 수정
   const myPercent = parseFloat(dummyData) || 0;
   const chartData = [
     { name: "나의 결과", value: myPercent },
     { name: "나머지", value: 100 - myPercent },
   ];
-  const SHADOW_COLOR = "rgba(0, 0, 0, 0.2)";
 
   return (
     <div className="mobile-container">
@@ -66,42 +64,74 @@ function ResultPage() {
           <h3
             style={{
               marginTop: 0,
-              marginBottom: "15px",
+              marginBottom: "30px",
               color: "#333",
               fontSize: "18px",
+              textAlign: "center",
             }}
           >
             호반우 분포도
           </h3>
 
-          {/* 💡 [차트 렌더링 영역] */}
-          <div style={{ width: "100%", height: "200px" }}>
+          {/* 모던 도넛 차트 */}
+          <div style={{ position: "relative", width: "100%", height: "220px" }}>
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
+                {/* 배경 원 (회색) */}
+                <Pie
+                  data={[{ value: 100 }]}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={70}
+                  outerRadius={85}
+                  dataKey="value"
+                  startAngle={90}
+                  endAngle={450}
+                  stroke="none"
+                >
+                  <Cell fill="#E8E8F0" />
+                </Pie>
+
+                {/* 실제 데이터 (보라색) */}
                 <Pie
                   data={chartData}
                   cx="50%"
                   cy="50%"
-                  innerRadius={0}
-                  outerRadius={80}
+                  innerRadius={70}
+                  outerRadius={85}
                   dataKey="value"
                   startAngle={90}
                   endAngle={-270}
                   stroke="none"
+                  cornerRadius={10}
                 >
-                  {chartData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={index === 0 ? "#d75555" : "#ececec"}
-                    />
-                  ))}
+                  <Cell fill="#D75555" />
+                  <Cell fill="transparent" />
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
+
+            {/* 중앙 텍스트 */}
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                textAlign: "center",
+              }}
+            >
+              <div style={{ fontSize: "12px", color: "#666", marginBottom: "5px" }}>
+                Total
+              </div>
+              <div style={{ fontSize: "36px", fontWeight: "bold", color: "#333" }}>
+                {myPercent}%
+              </div>
+            </div>
           </div>
 
-          <p className="stats-summary-text">
-            설문자 전체 중 <strong>{dummyData}%</strong> 입니다.
+          <p className="stats-summary-text" style={{ textAlign: "center", marginTop: "20px" }}>
+            설문자 전체 중 <strong>{myPercent}%</strong> 입니다.
           </p>
         </div>
 
