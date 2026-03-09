@@ -116,119 +116,119 @@ public class SurveyService {
                 return SurveyResultResponse.builder()
                         .resultType("학생회장우")
                         .description("\"나를 따르라우! A+로 이끌어주겠우. ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ\"")
-                        .image("/images/ESTJ.png")
+                        .image("/images/학생회장우.png")
                         .percentage(percentage)
                         .build();
             case "ESTP":
                 return SurveyResultResponse.builder()
                         .resultType("치타는웃고있우")
                         .description("\"놀 거 다 놀고 시험 전날만 새면 되우.\"")
-                        .image("/images/ESTP.png")
+                        .image("/images/치타는웃고있우.png")
                         .percentage(percentage)
                         .build();
             case "ESFJ":
                 return SurveyResultResponse.builder()
                         .resultType("투뿔우")
                         .description("\"족보 구해놨으니까 동기방에 공유하겠우!\"")
-                        .image("/images/ESFJ.png")
+                        .image("/images/투뿔우.png")
                         .percentage(percentage)
                         .build();
             case "ESFP":
                 return SurveyResultResponse.builder()
                         .resultType("럭키카우")
                         .description("\"망했다 생각했는데 B+ 나왔우.. 교수님 사랑해우.\"")
-                        .image("/images/ESFP.png")
+                        .image("/images/럭키카우.png")
                         .percentage(percentage)
                         .build();
             case "ENTJ":
                 return SurveyResultResponse.builder()
                         .resultType("야망있우")
                         .description("\"이번 축제 라인업이랑 동선은 내가 짰우.\"")
-                        .image("/images/ENTJ.png")
+                        .image("/images/야망있우.png")
                         .percentage(percentage)
                         .build();
             case "ENTP":
                 return SurveyResultResponse.builder()
                         .resultType("내말이다맞우")
                         .description("\"아니 그건 논리적으로 말이 안 되우! 한 잔 받으라우.\"")
-                        .image("/images/ENTP.png")
+                        .image("/images/내말이다맞우.png")
                         .percentage(percentage)
                         .build();
             case "ISFP":
                 return SurveyResultResponse.builder()
                         .resultType("뒷공부우~")
                         .description("\"제출 마감 1분 전에 냈우! 심장 쫄깃하우.\"")
-                        .image("/images/ISFP.png")
+                        .image("/images/뒷공부우~.png")
                         .percentage(percentage)
                         .build();
             case "ENFJ":
                 return SurveyResultResponse.builder()
                         .resultType("우리는모두친우")
                         .description("\"센팍에서 돗자리 깔고 엽떡 먹자우.\"")
-                        .image("/images/ENFJ.png")
+                        .image("/images/우리는모두친우.png")
                         .percentage(percentage)
                         .build();
             case "ENFP":
                 return SurveyResultResponse.builder()
                         .resultType("오늘만살우")
                         .description("\"학점은 재수강하면 되지만 추억은 영원하우!\"")
-                        .image("/images/ENFP.png")
+                        .image("/images/오늘만살우.png")
                         .percentage(percentage)
                         .build();
             case "ISTJ":
                 return SurveyResultResponse.builder()
                         .resultType("중앙도서 관우")
                         .description("\"시험 기간엔 말 걸지 말아주우. 예민하우.\"")
-                        .image("/images/ISTJ.png")
+                        .image("/images/중앙도서 관우.png")
                         .percentage(percentage)
                         .build();
             case "ISTP":
                 return SurveyResultResponse.builder()
                         .resultType("출석업고튀우")
                         .description("\"출석 점수 계산해보니 한 번 더 빠져도 A 가능하우.\"")
-                        .image("/images/ISTP.png")
+                        .image("/images/출석업고튀우.png")
                         .percentage(percentage)
                         .build();
             case "ISFJ":
                 return SurveyResultResponse.builder()
                         .resultType("전액장학우")
                         .description("\"이번 학기도 전액 장학금은 내 거우.\"")
-                        .image("/images/ISFJ.png")
+                        .image("/images/전액장학우.png")
                         .percentage(percentage)
                         .build();
             case "INTJ":
                 return SurveyResultResponse.builder()
                         .resultType("공강이제일좋우")
                         .description("\"공강 시간에는 PC방/카페 성지순례 가야 하우.\"")
-                        .image("/images/INTJ.png")
+                        .image("/images/공강이제일좋우.png")
                         .percentage(percentage)
                         .build();
             case "INTP":
                 return SurveyResultResponse.builder()
                         .resultType("일청담에서살우")
                         .description("\"학점이란 무엇일까.. 인생 무상 아니겠우?\"")
-                        .image("/images/INTP.png")
+                        .image("/images/일청담에서살우.png")
                         .percentage(percentage)
                         .build();
             case "INFJ":
                 return SurveyResultResponse.builder()
                         .resultType("감성브이록우")
                         .description("\"오늘 날씨가 너무 좋아서 자체 휴강하겠우.\"")
-                        .image("/images/INFJ.png")
+                        .image("/images/감성브이록우.png")
                         .percentage(percentage)
                         .build();
             case "INFP":
                 return SurveyResultResponse.builder()
                         .resultType("이불밖은싫우")
                         .description("\"오늘은 비 오니까 그냥 줌(Zoom)으로 듣고 싶우...\"")
-                        .image("/images/INFP.png")
+                        .image("/images/이불밖은싫우.png")
                         .percentage(percentage)
                         .build();
             default:
                 return SurveyResultResponse.builder()
                         .resultType("줏대 있는 마이웨이 호반우 (" + mbti + ")")
                         .description("\"당신만의 독특한 매력이 빛나는 캠퍼스 라이프!\"")
-                        .image("/images/ESTJ.png")
+                        .image("/images/줏대 있는 마이웨이 호반우.png")
                         .percentage(percentage)
                         .build();
         }
